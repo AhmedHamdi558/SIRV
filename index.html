@@ -5,6 +5,51 @@
   <title>SIRV | Hacked Tools</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
+    /* شاشة البداية */
+    #intro {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: #000;
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 1s ease;
+      cursor: pointer;
+      animation: introFadeIn 1.5s ease-in-out;
+    }
+
+    .intro-logo {
+      font-size: 8rem;
+      font-weight: 900;
+      letter-spacing: 20px;
+      background: linear-gradient(90deg, #00ff9f, #00e0ff, #00ff9f);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 60px #00ff9f, 0 0 40px #00e0ff;
+      animation: introGlow 3s infinite ease-in-out, logoPop 1.8s ease forwards;
+      user-select: none;
+      text-transform: uppercase;
+      opacity: 0;
+    }
+
+    @keyframes introGlow {
+      0% { text-shadow: 0 0 10px #00ff9f; transform: scale(1); }
+      50% { text-shadow: 0 0 40px #00e0ff; transform: scale(1.05); }
+      100% { text-shadow: 0 0 10px #00ff9f; transform: scale(1); }
+    }
+
+    @keyframes logoPop {
+      to { opacity: 1; transform: scale(1.05); }
+    }
+
+    @keyframes introFadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
     :root {
       --primary: #00ff9f;
       --danger: #ff003c;
@@ -31,25 +76,23 @@
       overflow-x: hidden;
       background-attachment: fixed;
       background-size: cover;
+      position: relative;
     }
 
-    h1 {
-      font-size: 4rem;
-      letter-spacing: 6px;
-      text-shadow: 0 0 10px var(--primary), 0 0 30px var(--primary);
-      animation: pulse 3s infinite;
-    }
-
-    p {
-      font-size: 1.2rem;
-      color: #cccccc;
-      margin: 20px auto 30px;
-      text-align: center;
-      max-width: 700px;
-      line-height: 1.6;
+    body::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      background: repeating-linear-gradient(0deg, rgba(0,255,159,0.04), rgba(0,255,159,0.04) 1px, transparent 1px, transparent 20px),
+                  repeating-linear-gradient(90deg, rgba(0,255,159,0.04), rgba(0,255,159,0.04) 1px, transparent 1px, transparent 20px);
+      z-index: 0;
+      pointer-events: none;
     }
 
     .application {
+      position: relative;
       background: linear-gradient(145deg, #1d1d1d, var(--panel));
       padding: 45px;
       border-radius: 20px;
@@ -58,16 +101,50 @@
       text-align: center;
       width: 95%;
       max-width: 800px;
-      animation: fadeInUp 1.2s ease-out;
-      position: relative;
+      animation: fadeInUp 1.5s ease-out;
       z-index: 2;
+      display: none;
+    }
+
+    h1 {
+      font-size: 4.5rem;
+      font-weight: 900;
+      letter-spacing: 12px;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 20px var(--primary), 0 0 30px var(--accent);
+      animation: glowText 5s infinite alternate;
+      text-transform: uppercase;
+    }
+
+    @keyframes glowText {
+      0% { text-shadow: 0 0 10px var(--primary); }
+      100% { text-shadow: 0 0 30px var(--accent); }
+    }
+
+    p {
+      font-size: 1.2rem;
+      color: #ccc;
+      margin: 20px auto 30px;
+      text-align: center;
+      max-width: 700px;
+      line-height: 1.6;
+    }
+
+    .buttons-row {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-bottom: 30px;
     }
 
     .app-buttons {
       display: flex;
       flex-direction: column;
       gap: 15px;
-      margin-top: 30px;
+      margin-top: 10px;
     }
 
     .app-button {
@@ -95,7 +172,7 @@
       background: none;
       border: none;
       color: var(--danger);
-      font-size: 1.4rem;
+      font-size: 1.2rem;
       cursor: pointer;
       font-weight: bold;
       padding: 6px;
@@ -106,25 +183,23 @@
       transform: scale(1.3);
     }
 
-    #addBtn {
-      margin-top: 35px;
+    .btn {
       background: var(--primary);
       color: #000;
       border: none;
-      padding: 16px 30px;
+      padding: 14px 28px;
       border-radius: 40px;
-      font-size: 1.8rem;
+      font-size: 1.2rem;
       font-weight: bold;
       cursor: pointer;
       transition: 0.4s ease-in-out;
-      box-shadow: 0 0 20px var(--primary);
+      box-shadow: 0 0 15px var(--primary);
     }
 
-    #addBtn:hover {
+    .btn:hover {
       background-color: #000;
       color: var(--primary);
       border: 2px solid var(--primary);
-      box-shadow: 0 0 25px var(--primary), 0 0 35px var(--primary);
       transform: scale(1.05);
     }
 
@@ -165,6 +240,61 @@
       flex-grow: 1;
     }
 
+    /* Modal Styles */
+    #instructionModal {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.75);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 10000;
+    }
+
+    .modal-content {
+      background: rgba(20, 20, 20, 0.95);
+      border: 2px solid var(--accent);
+      color: #fff;
+      padding: 30px;
+      border-radius: 15px;
+      width: 90%;
+      max-width: 600px;
+      box-shadow: 0 0 30px var(--accent);
+      animation: fadeInUp 0.6s ease;
+    }
+
+    .modal-content h2 {
+      margin-bottom: 15px;
+      color: var(--accent);
+      font-size: 1.8rem;
+      border-bottom: 1px solid var(--accent);
+      padding-bottom: 10px;
+    }
+
+    .modal-content p {
+      color: #ccc;
+      font-size: 1rem;
+      margin-bottom: 10px;
+      line-height: 1.6;
+    }
+
+    .close-btn {
+      margin-top: 20px;
+      background-color: var(--danger);
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .close-btn:hover {
+      background-color: #ff3366;
+    }
+
     /* Animations */
     @keyframes fadeInUp {
       0% { transform: translateY(40px); opacity: 0; }
@@ -180,109 +310,141 @@
       to { transform: translateY(0); opacity: 1; }
     }
 
-    @keyframes pulse {
-      0% { text-shadow: 0 0 10px var(--primary), 0 0 30px var(--primary); }
-      50% { text-shadow: 0 0 20px var(--primary), 0 0 60px var(--primary); }
-      100% { text-shadow: 0 0 10px var(--primary), 0 0 30px var(--primary); }
-    }
-
     @media (max-width: 600px) {
-      h1 { font-size: 2.8rem; }
-      #addBtn { font-size: 1.5rem; padding: 12px 24px; }
-    }
-
-    /* Background light grid effect (optional) */
-    body::before {
-      content: "";
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%;
-      height: 100%;
-      background: repeating-linear-gradient(0deg, rgba(0,255,159,0.05), rgba(0,255,159,0.05) 1px, transparent 1px, transparent 20px),
-                  repeating-linear-gradient(90deg, rgba(0,255,159,0.05), rgba(0,255,159,0.05) 1px, transparent 1px, transparent 20px);
-      z-index: 0;
-      pointer-events: none;
+      h1 { font-size: 3rem; }
+      .btn { font-size: 1rem; padding: 10px 20px; }
     }
   </style>
 </head>
 <body>
-  <div class="application">
-    <h1>SIRV</h1>
-    <p>
-      Welcome to <strong>SIRV</strong> — a platform for experimental tools, hacked applications, and scripts<br><br>
-      ⚠️ For advanced users only. Explore with caution and curiosity.<br><br>
-      Step into the underground.
-    </p>
 
-    <div id="appContainer" class="app-buttons"></div>
-    <button id="addBtn" onclick="toggleFileMenu()">ADD TOOL</button>
-    <div id="fileMenu"></div>
+<!-- شاشة البداية -->
+<div id="intro">
+  <div class="intro-logo">SIRV</div>
+</div>
+
+<!-- المحتوى الرئيسي -->
+<div class="application" id="mainApp">
+  <h1>SIRV</h1>
+  <p>
+    Specialized tools for hacking, experimentation, and digital freedom.<br>
+    Advanced users only. Explore with caution.
+  </p>
+
+  <div class="buttons-row">
+    <button class="btn" onclick="toggleFileMenu()">ADD TOOL</button>
+    <button class="btn" onclick="openInstructions()">INSTRUCTIONS</button>
   </div>
 
-  <script>
-    const appContainer = document.getElementById("appContainer");
-    const fileMenu = document.getElementById("fileMenu");
-    let apps = JSON.parse(localStorage.getItem("sirv_apps") || "[]");
+  <div id="fileMenu"></div>
+  <div id="appContainer" class="app-buttons"></div>
+</div>
 
-    function renderApps() {
-      appContainer.innerHTML = "";
-      apps.forEach((app, index) => {
-        const container = document.createElement("div");
-        container.className = "app-button";
-        container.style.animationDelay = `${index * 0.1}s`;
+<!-- Instruction Modal -->
+<div id="instructionModal">
+  <div class="modal-content">
+    <h2>Usage Instructions</h2>
+    <p>1. Click "ADD TOOL" to view available applications.</p>
+    <p>2. Select a tool to add it to your list.</p>
+    <p>3. Click a tool name to download it.</p>
+    <p>4. Use "DELETE" to remove a tool from your list.</p>
+    <button class="close-btn" onclick="closeInstructions()">Close</button>
+  </div>
+</div>
 
-        const link = document.createElement("a");
-        link.href = `./files/${app}`;
-        link.textContent = app;
-        link.download = app;
+<script>
+  window.addEventListener('DOMContentLoaded', () => {
+    const intro = document.getElementById('intro');
+    const app = document.getElementById('mainApp');
 
-        const del = document.createElement("button");
-        del.className = "delete-btn";
-        del.textContent = "DELETE";
-        del.onclick = () => deleteApp(app);
+    intro.addEventListener('click', () => {
+      intro.style.opacity = '0';
+      intro.style.pointerEvents = 'none';
+      setTimeout(() => {
+        intro.style.display = 'none';
+        app.style.display = 'block';
+      }, 1000);
+    });
+  });
 
-        container.appendChild(link);
-        container.appendChild(del);
-        appContainer.appendChild(container);
-      });
-    }
+  const appContainer = document.getElementById("appContainer");
+  const fileMenu = document.getElementById("fileMenu");
+  const instructionModal = document.getElementById("instructionModal");
 
-    function toggleFileMenu() {
-      if (fileMenu.style.display === "none" || fileMenu.innerHTML === "") {
-        fetch("./files/list.json")
-          .then(res => res.json())
-          .then(files => {
-            fileMenu.innerHTML = "";
-            files.forEach(file => {
-              const option = document.createElement("div");
-              option.className = "file-option";
-              option.textContent = file;
-              option.onclick = () => addApp(file);
-              fileMenu.appendChild(option);
-            });
-            fileMenu.style.display = "flex";
+  let apps = JSON.parse(localStorage.getItem("sirv_apps") || "[]");
+
+  function renderApps() {
+    appContainer.innerHTML = "";
+    apps.forEach((app, index) => {
+      const container = document.createElement("div");
+      container.className = "app-button";
+      container.style.animationDelay = `${index * 0.1}s`;
+
+      const link = document.createElement("a");
+      link.href = `./files/${app}`;
+      link.textContent = app;
+      link.download = app;
+
+      const del = document.createElement("button");
+      del.className = "delete-btn";
+      del.textContent = "DELETE";
+      del.onclick = () => {
+        if (confirm(`Are you sure you want to delete "${app}"?`)) {
+          deleteApp(app);
+        }
+      };
+
+      container.appendChild(link);
+      container.appendChild(del);
+      appContainer.appendChild(container);
+    });
+  }
+
+  function toggleFileMenu() {
+    if (fileMenu.style.display === "none" || fileMenu.innerHTML === "") {
+      fetch("./files/list.json")
+        .then(res => res.json())
+        .then(files => {
+          fileMenu.innerHTML = "";
+          files.forEach(file => {
+            const option = document.createElement("div");
+            option.className = "file-option";
+            option.textContent = file;
+            option.onclick = () => addApp(file);
+            fileMenu.appendChild(option);
           });
-      } else {
-        fileMenu.style.display = "none";
-      }
+          fileMenu.style.display = "flex";
+        });
+    } else {
+      fileMenu.style.display = "none";
     }
+  }
 
-    function addApp(fileName) {
-      if (!apps.includes(fileName)) {
-        apps.push(fileName);
-        localStorage.setItem("sirv_apps", JSON.stringify(apps));
-        renderApps();
-        fileMenu.style.display = "none";
-      }
-    }
-
-    function deleteApp(appName) {
-      apps = apps.filter(a => a !== appName);
+  function addApp(fileName) {
+    if (!apps.includes(fileName)) {
+      apps.push(fileName);
       localStorage.setItem("sirv_apps", JSON.stringify(apps));
       renderApps();
+      fileMenu.style.display = "none";
     }
+  }
 
+  function deleteApp(appName) {
+    apps = apps.filter(a => a !== appName);
+    localStorage.setItem("sirv_apps", JSON.stringify(apps));
     renderApps();
-  </script>
+  }
+
+  function openInstructions() {
+    instructionModal.style.display = "flex";
+  }
+
+  function closeInstructions() {
+    instructionModal.style.display = "none";
+  }
+
+  renderApps();
+</script>
+
 </body>
-</html>
+  </html>
