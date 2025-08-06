@@ -6,7 +6,7 @@
   <title>SIRV - Tools & Scripts</title>
   <style>
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-family: monospace;
       background: #0f0f0f;
       color: #f1f1f1;
       text-align: center;
@@ -21,7 +21,7 @@
     }
 
     p {
-      font-size: 1.1rem;
+      font-size: 1rem;
       color: #ccc;
       max-width: 600px;
       margin: auto;
@@ -69,6 +69,30 @@
       transform: rotate(90deg);
       box-shadow: 0 0 20px #00ffff;
     }
+
+    #selectContainer {
+      margin-top: 2rem;
+      display: none;
+    }
+
+    select {
+      padding: 0.5rem;
+      font-size: 1rem;
+    }
+
+    #confirmBtn {
+      margin-left: 1rem;
+      padding: 0.5rem 1rem;
+      font-size: 1rem;
+      background: #00ffff;
+      border: none;
+      color: #000;
+      cursor: pointer;
+    }
+
+    #confirmBtn:hover {
+      background: #00bbbb;
+    }
   </style>
 </head>
 <body>
@@ -81,11 +105,19 @@
 
   <div id="appList"></div>
 
-  <button id="addBtn" onclick="addApp()">+</button>
+  <div id="selectContainer">
+    <select id="fileSelect"></select>
+    <button id="confirmBtn" onclick="confirmSelection()">Add</button>
+  </div>
+
+  <button id="addBtn" onclick="loadFiles()">+</button>
 
   <script>
     const appList = document.getElementById("appList");
+    const fileSelect = document.getElementById("fileSelect");
+    const selectContainer = document.getElementById("selectContainer");
     let apps = JSON.parse(localStorage.getItem("sirvApps") || "[]");
+    let availableFiles = [];
 
     function renderApps() {
       appList.innerHTML = "";
@@ -94,29 +126,30 @@
         a.href = `./files/${app}`;
         a.className = "app-button";
         a.textContent = app;
-        a.download = true;
+        a.download = app;
         appList.appendChild(a);
       });
     }
 
-    function addApp() {
+    function loadFiles() {
       fetch('./files/list.json')
         .then(response => response.json())
         .then(fileList => {
-          const available = fileList.filter(file => !apps.includes(file));
-          if (available.length === 0) {
-            alert("All files are already added.");
+          availableFiles = fileList.filter(file => !apps.includes(file));
+          if (availableFiles.length === 0) {
+            alert("No new files to add.");
             return;
           }
 
-          const choice = prompt("Choose a file:\n" + available.join('\n'));
-          if (choice && available.includes(choice.trim())) {
-            apps.push(choice.trim());
-            localStorage.setItem("sirvApps", JSON.stringify(apps));
-            renderApps();
-          } else {
-            alert("Invalid or cancelled selection.");
-          }
+          fileSelect.innerHTML = "";
+          availableFiles.forEach(file => {
+            const option = document.createElement("option");
+            option.value = file;
+            option.textContent = file;
+            fileSelect.appendChild(option);
+          });
+
+          selectContainer.style.display = "block";
         })
         .catch(err => {
           alert("Couldn't load files list.");
@@ -124,7 +157,17 @@
         });
     }
 
+    function confirmSelection() {
+      const selected = fileSelect.value;
+      if (selected && !apps.includes(selected)) {
+        apps.push(selected);
+        localStorage.setItem("sirvApps", JSON.stringify(apps));
+        renderApps();
+        selectContainer.style.display = "none";
+      }
+    }
+
     renderApps();
   </script>
 </body>
-  </html>
+</html>
