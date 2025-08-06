@@ -1,173 +1,206 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>SIRV - Tools & Scripts</title>
+  <meta charset="UTF-8">
+  <title>SIRV | Hacked Tools</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    body {
-      font-family: monospace;
-      background: #0f0f0f;
-      color: #f1f1f1;
-      text-align: center;
+    * {
       margin: 0;
-      padding: 2rem;
-    }
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Courier New', Courier, monospace;
+    }body {
+  background-color: #0d0d0d;
+  color: #00ff9f;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow-x: hidden;
+  padding: 20px;
+}
 
-    h1 {
-      font-size: 3rem;
-      color: #00ffff;
-      margin-bottom: 0.5rem;
-    }
+h1 {
+  font-size: 4rem;
+  margin-bottom: 10px;
+  letter-spacing: 5px;
+  color: #00ff9f;
+  text-shadow: 0 0 10px #00ff9f, 0 0 20px #00ff9f;
+  animation: flicker 2s infinite;
+}
 
-    p {
-      font-size: 1rem;
-      color: #ccc;
-      max-width: 600px;
-      margin: auto;
-    }
+p {
+  font-size: 1.2rem;
+  color: #cccccc;
+  margin-bottom: 30px;
+  text-align: center;
+}
 
-    #appList {
-      margin-top: 2rem;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
-      justify-content: center;
-    }
+.application {
+  background-color: #1a1a1a;
+  padding: 30px;
+  border-radius: 10px;
+  border: 1px solid #333;
+  box-shadow: 0 0 20px rgba(0, 255, 159, 0.1);
+  text-align: center;
+  width: 90%;
+  max-width: 600px;
+}
 
-    .app-button {
-      background: #1e1e1e;
-      border: 1px solid #00ffff;
-      color: #00ffff;
-      padding: 0.7rem 1.2rem;
-      text-decoration: none;
-      border-radius: 8px;
-      transition: 0.3s;
-    }
+.app-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 20px;
+}
 
-    .app-button:hover {
-      background: #00ffff;
-      color: #000;
-    }
+.app-button {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #000;
+  color: #00ff9f;
+  border: 2px solid #00ff9f;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
 
-    #addBtn {
-      background: #00ffff;
-      color: #000;
-      border: none;
-      padding: 0.8rem 1.2rem;
-      border-radius: 50%;
-      font-size: 1.5rem;
-      cursor: pointer;
-      position: fixed;
-      bottom: 30px;
-      right: 30px;
-      box-shadow: 0 0 15px #00ffff;
-      transition: 0.3s;
-    }
+.app-button:hover {
+  background-color: #00ff9f;
+  color: #000;
+}
 
-    #addBtn:hover {
-      transform: rotate(90deg);
-      box-shadow: 0 0 20px #00ffff;
-    }
+.delete-btn {
+  background: none;
+  border: none;
+  color: #ff0066;
+  font-size: 1.2rem;
+  cursor: pointer;
+  margin-left: 10px;
+}
 
-    #selectContainer {
-      margin-top: 2rem;
-      display: none;
-    }
+#addBtn {
+  margin-top: 20px;
+  background-color: #00ff9f;
+  color: #000;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+  box-shadow: 0 0 10px #00ff9f;
+}
 
-    select {
-      padding: 0.5rem;
-      font-size: 1rem;
-    }
+#fileMenu {
+  margin-top: 15px;
+  background-color: #121212;
+  border: 1px solid #00ff9f;
+  padding: 10px;
+  border-radius: 5px;
+  display: none;
+  flex-direction: column;
+  gap: 10px;
+}
 
-    #confirmBtn {
-      margin-left: 1rem;
-      padding: 0.5rem 1rem;
-      font-size: 1rem;
-      background: #00ffff;
-      border: none;
-      color: #000;
-      cursor: pointer;
-    }
+.file-option {
+  color: #00ff9f;
+  cursor: pointer;
+  padding: 5px 10px;
+  transition: background 0.2s;
+}
 
-    #confirmBtn:hover {
-      background: #00bbbb;
-    }
+.file-option:hover {
+  background-color: #00ff9f;
+  color: #000;
+}
+
+@keyframes flicker {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.8; }
+}
+
   </style>
 </head>
 <body>
-  <h1>SIRV</h1>
-  <p>
-    SIRV is a specialized platform for hacked applications, advanced scripts, and unconventional tools.<br>
-    We cater to users who can handle high-risk files and technically complex content.<br>
-    Everything provided here is intended for testing, analysis, and exploration beyond the usual limits.
-  </p>
+  <div class="application">
+    <h1>SIRV</h1>
+    <p>SIRV is a specialized platform for hacked applications, advanced scripts, and unconventional tools.<br><br>
+    We cater to users who can handle high-risk files and technically complex content.<br><br>
+    Everything provided here is intended for testing, analysis, and exploration beyond the usual limits.</p><div id="appContainer" class="app-buttons"></div>
 
-  <div id="appList"></div>
+<button id="addBtn" onclick="toggleFileMenu()">+</button>
+<div id="fileMenu"></div>
 
-  <div id="selectContainer">
-    <select id="fileSelect"></select>
-    <button id="confirmBtn" onclick="confirmSelection()">Add</button>
-  </div>
-
-  <button id="addBtn" onclick="loadFiles()">+</button>
-
-  <script>
-    const appList = document.getElementById("appList");
-    const fileSelect = document.getElementById("fileSelect");
-    const selectContainer = document.getElementById("selectContainer");
-    let apps = JSON.parse(localStorage.getItem("sirvApps") || "[]");
-    let availableFiles = [];
+  </div>  <script>
+    const appContainer = document.getElementById("appContainer");
+    const fileMenu = document.getElementById("fileMenu");
+    let apps = JSON.parse(localStorage.getItem("sirv_apps") || "[]");
 
     function renderApps() {
-      appList.innerHTML = "";
+      appContainer.innerHTML = "";
       apps.forEach(app => {
-        const a = document.createElement("a");
-        a.href = `./files/${app}`;
-        a.className = "app-button";
-        a.textContent = app;
-        a.download = app;
-        appList.appendChild(a);
+        const container = document.createElement("div");
+        container.className = "app-button";
+
+        const link = document.createElement("a");
+        link.href = `./files/${app}`;
+        link.textContent = app;
+        link.download = app;
+        link.style.flexGrow = 1;
+        link.style.textDecoration = 'none';
+        link.style.color = 'inherit';
+
+        const del = document.createElement("button");
+        del.textContent = "🗑";
+        del.className = "delete-btn";
+        del.onclick = () => deleteApp(app);
+
+        container.appendChild(link);
+        container.appendChild(del);
+        appContainer.appendChild(container);
       });
     }
 
-    function loadFiles() {
-      fetch('./files/list.json')
-        .then(response => response.json())
-        .then(fileList => {
-          availableFiles = fileList.filter(file => !apps.includes(file));
-          if (availableFiles.length === 0) {
-            alert("No new files to add.");
-            return;
-          }
-
-          fileSelect.innerHTML = "";
-          availableFiles.forEach(file => {
-            const option = document.createElement("option");
-            option.value = file;
-            option.textContent = file;
-            fileSelect.appendChild(option);
+    function toggleFileMenu() {
+      if (fileMenu.style.display === "none" || fileMenu.innerHTML === "") {
+        fetch("./files/list.json")
+          .then(res => res.json())
+          .then(files => {
+            fileMenu.innerHTML = "";
+            files.forEach(file => {
+              const option = document.createElement("div");
+              option.className = "file-option";
+              option.textContent = file;
+              option.onclick = () => addApp(file);
+              fileMenu.appendChild(option);
+            });
+            fileMenu.style.display = "flex";
           });
-
-          selectContainer.style.display = "block";
-        })
-        .catch(err => {
-          alert("Couldn't load files list.");
-          console.error(err);
-        });
-    }
-
-    function confirmSelection() {
-      const selected = fileSelect.value;
-      if (selected && !apps.includes(selected)) {
-        apps.push(selected);
-        localStorage.setItem("sirvApps", JSON.stringify(apps));
-        renderApps();
-        selectContainer.style.display = "none";
+      } else {
+        fileMenu.style.display = "none";
       }
     }
 
+    function addApp(fileName) {
+      if (!apps.includes(fileName)) {
+        apps.push(fileName);
+        localStorage.setItem("sirv_apps", JSON.stringify(apps));
+        renderApps();
+        fileMenu.style.display = "none";
+      }
+    }
+
+    function deleteApp(appName) {
+      apps = apps.filter(a => a !== appName);
+      localStorage.setItem("sirv_apps", JSON.stringify(apps));
+      renderApps();
+    }
+
+    // Initial render
     renderApps();
-  </script>
-</body>
-</html>
+  </script></body>
+  </html>
