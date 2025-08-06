@@ -1,162 +1,244 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>SIRV | Hacked Tools</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
+    :root {
+      --primary: #00ff9f;
+      --danger: #ff003c;
+      --bg-dark: #0a0a0a;
+      --panel: #111;
+      --accent: #00e0ff;
+    }
+
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
       font-family: 'Courier New', Courier, monospace;
-    }body {
-  background-color: #0d0d0d;
-  color: #00ff9f;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  overflow-x: hidden;
-  padding: 20px;
-}
+    }
 
-h1 {
-  font-size: 4rem;
-  margin-bottom: 10px;
-  letter-spacing: 5px;
-  color: #00ff9f;
-  text-shadow: 0 0 10px #00ff9f, 0 0 20px #00ff9f;
-  animation: flicker 2s infinite;
-}
+    body {
+      background: radial-gradient(circle at center, var(--bg-dark), #000);
+      color: var(--primary);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 30px;
+      overflow-x: hidden;
+      background-attachment: fixed;
+      background-size: cover;
+    }
 
-p {
-  font-size: 1.2rem;
-  color: #cccccc;
-  margin-bottom: 30px;
-  text-align: center;
-}
+    h1 {
+      font-size: 4rem;
+      letter-spacing: 6px;
+      text-shadow: 0 0 10px var(--primary), 0 0 30px var(--primary);
+      animation: pulse 3s infinite;
+    }
 
-.application {
-  background-color: #1a1a1a;
-  padding: 30px;
-  border-radius: 10px;
-  border: 1px solid #333;
-  box-shadow: 0 0 20px rgba(0, 255, 159, 0.1);
-  text-align: center;
-  width: 90%;
-  max-width: 600px;
-}
+    p {
+      font-size: 1.2rem;
+      color: #cccccc;
+      margin: 20px auto 30px;
+      text-align: center;
+      max-width: 700px;
+      line-height: 1.6;
+    }
 
-.app-buttons {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-top: 20px;
-}
+    .application {
+      background: linear-gradient(145deg, #1d1d1d, var(--panel));
+      padding: 45px;
+      border-radius: 20px;
+      border: 2px solid var(--primary);
+      box-shadow: 0 0 40px rgba(0, 255, 159, 0.2);
+      text-align: center;
+      width: 95%;
+      max-width: 800px;
+      animation: fadeInUp 1.2s ease-out;
+      position: relative;
+      z-index: 2;
+    }
 
-.app-button {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #000;
-  color: #00ff9f;
-  border: 2px solid #00ff9f;
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: all 0.3s ease-in-out;
-}
+    .app-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      margin-top: 30px;
+    }
 
-.app-button:hover {
-  background-color: #00ff9f;
-  color: #000;
-}
+    .app-button {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #000;
+      color: var(--primary);
+      border: 2px solid var(--primary);
+      padding: 14px 20px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: 0.3s ease-in-out;
+      opacity: 0;
+      animation: fadeIn 0.6s forwards;
+    }
 
-.delete-btn {
-  background: none;
-  border: none;
-  color: #ff0066;
-  font-size: 1.2rem;
-  cursor: pointer;
-  margin-left: 10px;
-}
+    .app-button:hover {
+      background-color: var(--primary);
+      color: #000;
+      box-shadow: 0 0 20px var(--primary), 0 0 40px var(--primary);
+    }
 
-#addBtn {
-  margin-top: 20px;
-  background-color: #00ff9f;
-  color: #000;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  font-weight: bold;
-  font-size: 1rem;
-  cursor: pointer;
-  box-shadow: 0 0 10px #00ff9f;
-}
+    .delete-btn {
+      background: none;
+      border: none;
+      color: var(--danger);
+      font-size: 1.4rem;
+      cursor: pointer;
+      font-weight: bold;
+      padding: 6px;
+      transition: transform 0.2s;
+    }
 
-#fileMenu {
-  margin-top: 15px;
-  background-color: #121212;
-  border: 1px solid #00ff9f;
-  padding: 10px;
-  border-radius: 5px;
-  display: none;
-  flex-direction: column;
-  gap: 10px;
-}
+    .delete-btn:hover {
+      transform: scale(1.3);
+    }
 
-.file-option {
-  color: #00ff9f;
-  cursor: pointer;
-  padding: 5px 10px;
-  transition: background 0.2s;
-}
+    #addBtn {
+      margin-top: 35px;
+      background: var(--primary);
+      color: #000;
+      border: none;
+      padding: 16px 30px;
+      border-radius: 40px;
+      font-size: 1.8rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.4s ease-in-out;
+      box-shadow: 0 0 20px var(--primary);
+    }
 
-.file-option:hover {
-  background-color: #00ff9f;
-  color: #000;
-}
+    #addBtn:hover {
+      background-color: #000;
+      color: var(--primary);
+      border: 2px solid var(--primary);
+      box-shadow: 0 0 25px var(--primary), 0 0 35px var(--primary);
+      transform: scale(1.05);
+    }
 
-@keyframes flicker {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.8; }
-}
+    #fileMenu {
+      margin-top: 20px;
+      background-color: #121212;
+      border: 1px solid var(--accent);
+      padding: 20px;
+      border-radius: 12px;
+      display: none;
+      flex-direction: column;
+      gap: 12px;
+      animation: slideIn 0.4s ease-out;
+      max-height: 300px;
+      overflow-y: auto;
+    }
 
+    .file-option {
+      color: var(--accent);
+      background: #000;
+      border: 1px solid #222;
+      padding: 12px 16px;
+      border-radius: 6px;
+      transition: all 0.2s;
+      text-align: left;
+      font-weight: bold;
+    }
+
+    .file-option:hover {
+      background-color: var(--accent);
+      color: #000;
+      box-shadow: 0 0 15px var(--accent);
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+      flex-grow: 1;
+    }
+
+    /* Animations */
+    @keyframes fadeInUp {
+      0% { transform: translateY(40px); opacity: 0; }
+      100% { transform: translateY(0); opacity: 1; }
+    }
+
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+
+    @keyframes slideIn {
+      from { transform: translateY(-10px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    @keyframes pulse {
+      0% { text-shadow: 0 0 10px var(--primary), 0 0 30px var(--primary); }
+      50% { text-shadow: 0 0 20px var(--primary), 0 0 60px var(--primary); }
+      100% { text-shadow: 0 0 10px var(--primary), 0 0 30px var(--primary); }
+    }
+
+    @media (max-width: 600px) {
+      h1 { font-size: 2.8rem; }
+      #addBtn { font-size: 1.5rem; padding: 12px 24px; }
+    }
+
+    /* Background light grid effect (optional) */
+    body::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      background: repeating-linear-gradient(0deg, rgba(0,255,159,0.05), rgba(0,255,159,0.05) 1px, transparent 1px, transparent 20px),
+                  repeating-linear-gradient(90deg, rgba(0,255,159,0.05), rgba(0,255,159,0.05) 1px, transparent 1px, transparent 20px);
+      z-index: 0;
+      pointer-events: none;
+    }
   </style>
 </head>
 <body>
   <div class="application">
     <h1>SIRV</h1>
-    <p>SIRV is a specialized platform for hacked applications, advanced scripts, and unconventional tools.<br><br>
-    We cater to users who can handle high-risk files and technically complex content.<br><br>
-    Everything provided here is intended for testing, analysis, and exploration beyond the usual limits.</p><div id="appContainer" class="app-buttons"></div>
+    <p>
+      Welcome to <strong>SIRV</strong> — a platform for experimental tools, hacked applications, and scripts<br><br>
+      ⚠️ For advanced users only. Explore with caution and curiosity.<br><br>
+      Step into the underground.
+    </p>
 
-<button id="addBtn" onclick="toggleFileMenu()">+</button>
-<div id="fileMenu"></div>
+    <div id="appContainer" class="app-buttons"></div>
+    <button id="addBtn" onclick="toggleFileMenu()">ADD TOOL</button>
+    <div id="fileMenu"></div>
+  </div>
 
-  </div>  <script>
+  <script>
     const appContainer = document.getElementById("appContainer");
     const fileMenu = document.getElementById("fileMenu");
     let apps = JSON.parse(localStorage.getItem("sirv_apps") || "[]");
 
     function renderApps() {
       appContainer.innerHTML = "";
-      apps.forEach(app => {
+      apps.forEach((app, index) => {
         const container = document.createElement("div");
         container.className = "app-button";
+        container.style.animationDelay = `${index * 0.1}s`;
 
         const link = document.createElement("a");
         link.href = `./files/${app}`;
         link.textContent = app;
         link.download = app;
-        link.style.flexGrow = 1;
-        link.style.textDecoration = 'none';
-        link.style.color = 'inherit';
 
         const del = document.createElement("button");
-        del.textContent = "🗑";
         del.className = "delete-btn";
+        del.textContent = "DELETE";
         del.onclick = () => deleteApp(app);
 
         container.appendChild(link);
@@ -200,7 +282,7 @@ p {
       renderApps();
     }
 
-    // Initial render
     renderApps();
-  </script></body>
-  </html>
+  </script>
+</body>
+</html>
