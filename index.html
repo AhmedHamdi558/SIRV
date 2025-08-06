@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>SIRV | Terminal Download</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SIRV</title>
   <style>
     * {
       margin: 0;
@@ -15,76 +15,37 @@
     body {
       background-color: #0d0d0d;
       color: #00ff9f;
-      height: 100vh;
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
-      justify-content: center;
       align-items: center;
-      overflow: hidden;
+      justify-content: flex-start;
+      padding: 40px 20px;
     }
 
-    h1 {
-      font-size: 4rem;
-      margin-bottom: 10px;
-      letter-spacing: 5px;
-      color: #00ff9f;
-      text-shadow: 0 0 10px #00ff9f, 0 0 20px #00ff9f;
-      animation: flicker 2s infinite;
-    }
-
-    p {
-      font-size: 1.2rem;
-      color: #cccccc;
-      margin-bottom: 30px;
-    }
-
-    a button {
-      background-color: #000;
-      color: #00ff9f;
-      border: 2px solid #00ff9f;
-      padding: 15px 40px;
-      font-size: 1rem;
-      cursor: pointer;
-      border-radius: 5px;
-      position: relative;
-      transition: all 0.3s ease-in-out;
-      text-transform: uppercase;
-      box-shadow: 0 0 20px rgba(0, 255, 159, 0.3);
-    }
-
-    a button:hover {
-      background-color: #00ff9f;
-      color: #000;
-      box-shadow: 0 0 30px #00ff9f, 0 0 60px #00ff9f;
-      transform: scale(1.05);
-    }
-
-    .terminal {
+    .container {
       background-color: #1a1a1a;
       padding: 30px;
       border-radius: 10px;
       border: 1px solid #333;
       box-shadow: 0 0 20px rgba(0, 255, 159, 0.1);
       text-align: center;
-      width: 90%;
+      width: 100%;
       max-width: 600px;
     }
 
-    @keyframes flicker {
-      0%, 100% {
-        opacity: 1;
-      }
-      50% {
-        opacity: 0.8;
-      }
-    }
-
-    .glitch {
+    h1.title {
+      font-size: 4rem;
+      margin-bottom: 15px;
+      letter-spacing: 5px;
+      color: #00ff9f;
+      text-shadow: 0 0 10px #00ff9f, 0 0 20px #00ff9f;
+      animation: flicker 2s infinite;
       position: relative;
     }
 
-    .glitch::before,
-    .glitch::after {
+    .title::before,
+    .title::after {
       content: attr(data-text);
       position: absolute;
       left: 0;
@@ -92,46 +53,137 @@
       overflow: hidden;
     }
 
-    .glitch::before {
+    .title::before {
       top: -2px;
       color: #f0f;
       z-index: -1;
       animation: glitchTop 1s infinite linear;
     }
 
-    .glitch::after {
+    .title::after {
       top: 2px;
       color: #0ff;
       z-index: -2;
       animation: glitchBottom 1s infinite linear;
     }
 
+    p.description {
+      font-size: 1.2rem;
+      color: #cccccc;
+      line-height: 1.6;
+      margin-bottom: 30px;
+    }
+
+    .app-list {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      margin-bottom: 25px;
+    }
+
+    .app-button {
+      background-color: #000;
+      color: #00ff9f;
+      border: 2px solid #00ff9f;
+      padding: 15px 40px;
+      font-size: 1rem;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 5px;
+      cursor: pointer;
+      box-shadow: 0 0 20px rgba(0, 255, 159, 0.3);
+      transition: 0.3s;
+    }
+
+    .app-button:hover {
+      background-color: #00ff9f;
+      color: #000;
+      box-shadow: 0 0 30px #00ff9f, 0 0 60px #00ff9f;
+      transform: scale(1.05);
+    }
+
+    .add-button {
+      font-size: 2rem;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      border: none;
+      background-color: #00ff9f;
+      color: #000;
+      cursor: pointer;
+      font-weight: bold;
+      box-shadow: 0 0 15px #00ff9f;
+      transition: 0.2s;
+    }
+
+    .add-button:hover {
+      transform: scale(1.1);
+    }
+
+    @keyframes flicker {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.8; }
+    }
+
     @keyframes glitchTop {
-      0% { transform: translateX(0); }
+      0%, 100% { transform: translateX(0); }
       20% { transform: translateX(-2px); }
       40% { transform: translateX(2px); }
       60% { transform: translateX(-1px); }
       80% { transform: translateX(1px); }
-      100% { transform: translateX(0); }
     }
 
     @keyframes glitchBottom {
-      0% { transform: translateX(0); }
+      0%, 100% { transform: translateX(0); }
       20% { transform: translateX(2px); }
       40% { transform: translateX(-2px); }
       60% { transform: translateX(1px); }
       80% { transform: translateX(-1px); }
-      100% { transform: translateX(0); }
     }
   </style>
 </head>
 <body>
-  <div class="terminal">
-    <h1 class="glitch" data-text="SIRV">SIRV</h1>
-    <p>Access granted. Ready to deploy payload.</p>
-    <a href="The fun bird.apk" download>
-      <button>Download APK</button>
-    </a>
+  <div class="container">
+    <h1 class="title" data-text="SIRV">SIRV</h1>
+    <p class="description">
+      Sirv is a specialized platform offering hacked applications, advanced scripts, and unconventional tools.<br>
+      We serve users who can work with high-risk files and technically demanding content.<br>
+      All resources provided are intended for testing, analysis, and exploration beyond conventional boundaries.
+    </p>
+
+    <div class="app-list" id="appList">
+      <!-- Application links will be added here -->
+    </div>
+
+    <button class="add-button" onclick="addApp()">+</button>
   </div>
+
+  <script>
+    const appList = document.getElementById("appList");
+    let apps = JSON.parse(localStorage.getItem("sirvApps") || "[]");
+
+    function renderApps() {
+      appList.innerHTML = "";
+      apps.forEach(app => {
+        const a = document.createElement("a");
+        a.href = `./files/${app}.apk`;
+        a.className = "app-button";
+        a.textContent = app;
+        a.download = true;
+        appList.appendChild(a);
+      });
+    }
+
+    function addApp() {
+      const name = prompt("Enter file name (without .apk):");
+      if (name && !apps.includes(name.trim())) {
+        apps.push(name.trim());
+        localStorage.setItem("sirvApps", JSON.stringify(apps));
+        renderApps();
+      }
+    }
+
+    renderApps();
+  </script>
 </body>
 </html>
