@@ -1,472 +1,330 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <link rel="icon" href="sirv.png" type="image/png">
-  <link rel="shortcut icon" href="sirv.png" type="image/png">
-  <title>SIRV | Hacked Tools</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <style>
-    /* شاشة البداية */
-    #intro {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: #000;
-      z-index: 9999;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 1s ease;
-      cursor: pointer;
-      animation: introFadeIn 1.5s ease-in-out;
-    }
-
-    .intro-logo {
-      font-size: 8rem;
-      font-weight: 900;
-      letter-spacing: 20px;
-      background: linear-gradient(90deg, #00ff9f, #00e0ff, #00ff9f);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      text-shadow: 0 0 60px #00ff9f, 0 0 40px #00e0ff;
-      animation: introGlow 3s infinite ease-in-out, logoPop 1.8s ease forwards;
-      user-select: none;
-      text-transform: uppercase;
-      opacity: 0;
-    }
-
-    @keyframes introGlow {
-      0% { text-shadow: 0 0 10px #00ff9f; transform: scale(1); }
-      50% { text-shadow: 0 0 40px #00e0ff; transform: scale(1.05); }
-      100% { text-shadow: 0 0 10px #00ff9f; transform: scale(1); }
-    }
-
-    @keyframes logoPop {
-      to { opacity: 1; transform: scale(1.05); }
-    }
-
-    @keyframes introFadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
-    :root {
-      --primary: #00ff9f;
-      --danger: #ff003c;
-      --bg-dark: #0a0a0a;
-      --panel: #111;
-      --accent: #00e0ff;
-    }
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Courier New', Courier, monospace;
-    }
-
-    body {
-      background: radial-gradient(circle at center, var(--bg-dark), #000);
-      color: var(--primary);
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 30px;
-      overflow-x: hidden;
-      background-attachment: fixed;
-      background-size: cover;
-      position: relative;
-    }
-
-    body::before {
-      content: "";
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%;
-      height: 100%;
-      background: repeating-linear-gradient(0deg, rgba(0,255,159,0.04), rgba(0,255,159,0.04) 1px, transparent 1px, transparent 20px),
-                  repeating-linear-gradient(90deg, rgba(0,255,159,0.04), rgba(0,255,159,0.04) 1px, transparent 1px, transparent 20px);
-      z-index: 0;
-      pointer-events: none;
-    }
-
-    .application {
-      position: relative;
-      background: linear-gradient(145deg, #1d1d1d, var(--panel));
-      padding: 45px;
-      border-radius: 20px;
-      border: 2px solid var(--primary);
-      box-shadow: 0 0 40px rgba(0, 255, 159, 0.2);
-      text-align: center;
-      width: 95%;
-      max-width: 800px;
-      animation: fadeInUp 1.5s ease-out;
-      z-index: 2;
-      display: none;
-    }
-
+<meta charset="UTF-8" />
+<title>SIRV | Hacked Tools</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<style>
+  :root {
+    --primary: #00ff9f;
+    --danger: #ff003c;
+    --bg-dark: #0a0a0a;
+    --panel: #111;
+    --accent: #00e0ff;
+  }
+  * {
+    margin: 0; padding: 0; box-sizing: border-box;
+    font-family: 'Courier New', Courier, monospace;
+  }
+  body {
+    background: radial-gradient(circle at center, var(--bg-dark), #000);
+    color: var(--primary);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    padding: 30px;
+    position: relative;
+  }
+  body::before {
+    content: "";
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: repeating-linear-gradient(0deg, rgba(0,255,159,0.04), rgba(0,255,159,0.04) 1px, transparent 1px, transparent 20px),
+                repeating-linear-gradient(90deg, rgba(0,255,159,0.04), rgba(0,255,159,0.04) 1px, transparent 1px, transparent 20px);
+    z-index: 0; pointer-events: none;
+  }
+  .application {
+    background: linear-gradient(145deg, #1d1d1d, var(--panel));
+    padding: 45px;
+    border-radius: 20px;
+    border: 2px solid var(--primary);
+    box-shadow: 0 0 40px rgba(0, 255, 159, 0.2);
+    width: 100%;
+    max-width: 900px;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  h1 {
+    font-size: 4.5rem;
+    font-weight: 900;
+    letter-spacing: 12px;
+    background: linear-gradient(90deg, var(--primary), var(--accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 20px var(--primary), 0 0 30px var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+  p {
+    font-size: 1.1rem;
+    color: #ccc;
+  }
+  .add-file-container {
+    display: flex;
+    gap: 10px;
+    max-width: 400px;
+  }
+  .add-file-input {
+    flex-grow: 1;
+    padding: 10px 15px;
+    font-size: 1.1rem;
+    border-radius: 10px;
+    border: 2px solid var(--primary);
+    background-color: #000;
+    color: var(--primary);
+    outline: none;
+    transition: border-color 0.3s;
+  }
+  .add-file-input:focus {
+    border-color: var(--accent);
+  }
+  .add-file-button {
+    padding: 10px 18px;
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #000;
+    background-color: var(--primary);
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  .add-file-button:hover {
+    background-color: var(--accent);
+  }
+  .category-section {
+    margin-bottom: 35px;
+  }
+  .category-header {
+    font-size: 2.2rem;
+    margin-bottom: 15px;
+    color: var(--primary);
+    border-bottom: 2px solid var(--accent);
+    padding-bottom: 6px;
+    user-select: none;
+  }
+  .app-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .app-button {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #000;
+    border: 2px solid var(--primary);
+    padding: 14px 20px;
+    border-radius: 10px;
+    transition: 0.3s;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .app-button:hover {
+    background-color: var(--primary);
+    color: #000;
+    box-shadow: 0 0 20px var(--primary), 0 0 40px var(--primary);
+  }
+  .app-button a {
+    font-size: 1.1rem;
+    color: var(--primary);
+    font-weight: bold;
+    text-decoration: none;
+    flex-grow: 1;
+    word-break: break-word;
+    user-select: text;
+  }
+  .app-button a:hover {
+    color: var(--accent);
+  }
+  .delete-btn {
+    background: transparent;
+    color: var(--danger);
+    border: 2px solid var(--danger);
+    padding: 6px 14px;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s ease;
+    flex-shrink: 0;
+    box-shadow: none;
+  }
+  .delete-btn:hover {
+    background-color: var(--danger);
+    color: #fff;
+    box-shadow: 0 0 15px var(--danger);
+    transform: scale(1.1);
+  }
+  @media (max-width: 600px) {
     h1 {
-      font-size: 4.5rem;
-      font-weight: 900;
-      letter-spacing: 12px;
-      background: linear-gradient(90deg, var(--primary), var(--accent));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      text-shadow: 0 0 20px var(--primary), 0 0 30px var(--accent);
-      animation: glowText 5s infinite alternate;
-      text-transform: uppercase;
+      font-size: 3rem;
     }
-
-    @keyframes glowText {
-      0% { text-shadow: 0 0 10px var(--primary); }
-      100% { text-shadow: 0 0 30px var(--accent); }
-    }
-
-    p {
-      font-size: 1.2rem;
-      color: #ccc;
-      margin: 20px auto 30px;
-      text-align: center;
-      max-width: 700px;
-      line-height: 1.6;
-    }
-
-    .buttons-row {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      flex-wrap: wrap;
-      margin-bottom: 30px;
-    }
-
-    .app-buttons {
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-      margin-top: 10px;
-    }
-
-    .app-button {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background-color: #000;
-      border: 2px solid var(--primary);
-      padding: 14px 20px;
-      border-radius: 10px;
-      opacity: 0;
-      animation: fadeIn 0.6s forwards;
-      transition: 0.3s;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .app-button:hover {
-      background-color: var(--primary);
-      color: #000;
-      box-shadow: 0 0 20px var(--primary), 0 0 40px var(--primary);
-    }
-
-    .app-button a {
-      font-size: 1.1rem;
-      color: var(--primary);
-      font-weight: bold;
-      transition: color 0.2s;
-      text-decoration: none;
-      flex-grow: 1;
-      word-break: break-word;
-    }
-
-    .app-button a:hover {
-      color: var(--accent);
-    }
-
     .delete-btn {
-      background: var(--danger);
-      color: #fff;
-      border: none;
-      padding: 8px 16px;
-      border-radius: 8px;
-      font-size: 0.95rem;
-      font-weight: bold;
-      cursor: pointer;
-      transition: 0.3s ease;
-      margin-left: 15px;
-      flex-shrink: 0;
-      box-shadow: 0 0 10px rgba(255, 0, 60, 0.5);
+      padding: 6px 10px;
+      font-size: 0.85rem;
     }
-
-    .delete-btn:hover {
-      background-color: #ff3366;
-      box-shadow: 0 0 20px rgba(255, 0, 60, 0.7);
-      transform: scale(1.05);
-    }
-
-    .btn {
-      background: var(--primary);
-      color: #000;
-      border: none;
-      padding: 14px 28px;
-      border-radius: 40px;
-      font-size: 1.2rem;
-      font-weight: bold;
-      cursor: pointer;
-      transition: 0.4s ease-in-out;
-      box-shadow: 0 0 15px var(--primary);
-    }
-
-    .btn:hover {
-      background-color: #000;
-      color: var(--primary);
-      border: 2px solid var(--primary);
-      transform: scale(1.05);
-    }
-
-    #fileMenu {
-      margin-top: 20px;
-      background-color: #121212;
-      border: 1px solid var(--accent);
-      padding: 20px;
-      border-radius: 12px;
-      display: none;
-      flex-direction: column;
-      gap: 12px;
-      animation: slideIn 0.4s ease-out;
-      max-height: 300px;
-      overflow-y: auto;
-    }
-
-    .file-option {
-      color: var(--accent);
-      background: #000;
-      border: 1px solid #222;
-      padding: 12px 16px;
-      border-radius: 6px;
-      transition: all 0.2s;
-      text-align: left;
-      font-weight: bold;
-    }
-
-    .file-option:hover {
-      background-color: var(--accent);
-      color: #000;
-      box-shadow: 0 0 15px var(--accent);
-    }
-
-    a {
-      text-decoration: none;
-      color: inherit;
-      flex-grow: 1;
-    }
-
-    /* Modal Styles */
-    #instructionModal {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0,0,0,0.75);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 10000;
-    }
-
-    .modal-content {
-      background: rgba(20, 20, 20, 0.95);
-      border: 2px solid var(--accent);
-      color: #fff;
-      padding: 30px;
-      border-radius: 15px;
-      width: 90%;
-      max-width: 600px;
-      box-shadow: 0 0 30px var(--accent);
-      animation: fadeInUp 0.6s ease;
-    }
-
-    .modal-content h2 {
-      margin-bottom: 15px;
-      color: var(--accent);
-      font-size: 1.8rem;
-      border-bottom: 1px solid var(--accent);
-      padding-bottom: 10px;
-    }
-
-    .modal-content p {
-      color: #ccc;
+    .app-button a {
       font-size: 1rem;
-      margin-bottom: 10px;
-      line-height: 1.6;
     }
-
-    .close-btn {
-      margin-top: 20px;
-      background-color: var(--danger);
-      color: #fff;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: 0.3s;
+    .add-file-input {
+      font-size: 1rem;
     }
-
-    .close-btn:hover {
-      background-color: #ff3366;
+    .add-file-button {
+      font-size: 1rem;
+      padding: 8px 12px;
     }
-
-    /* Animations */
-    @keyframes fadeInUp {
-      0% { transform: translateY(40px); opacity: 0; }
-      100% { transform: translateY(0); opacity: 1; }
-    }
-
-    @keyframes fadeIn {
-      to { opacity: 1; }
-    }
-
-    @keyframes slideIn {
-      from { transform: translateY(-10px); opacity: 0; }
-      to { transform: translateY(0); opacity: 1; }
-    }
-
-    @media (max-width: 600px) {
-      h1 { font-size: 3rem; }
-      .btn { font-size: 1rem; padding: 10px 20px; }
-    }
-  </style>
+  }
+</style>
 </head>
 <body>
 
-<!-- شاشة البداية -->
-<div id="intro">
-  <div class="intro-logo">SIRV</div>
-</div>
-
-<!-- المحتوى الرئيسي -->
 <div class="application" id="mainApp">
   <h1>SIRV</h1>
-  <p>
-    Specialized tools for hacking, experimentation, and digital freedom.<br>
-    Advanced users only. Explore with caution.
-  </p>
+  <p>Specialized tools for hacking, experimentation, and digital freedom.<br>Advanced users only. Explore with caution.</p>
 
-  <div class="buttons-row">
-    <button class="btn" onclick="toggleFileMenu()">ADD TOOL</button>
-    <button class="btn" onclick="openInstructions()">INSTRUCTIONS</button>
+  <div class="add-file-container">
+    <input
+      type="text"
+      class="add-file-input"
+      id="newFileName"
+      placeholder="Enter new tool filename..."
+      aria-label="New tool filename"
+    />
+    <button class="add-file-button" id="addFileBtn" title="Add new tool">+</button>
   </div>
 
-  <div id="fileMenu"></div>
-  <div id="appContainer" class="app-buttons"></div>
-</div>
-
-<!-- Instruction Modal -->
-<div id="instructionModal">
-  <div class="modal-content">
-    <h2>Usage Instructions</h2>
-    <p>1. Click "ADD TOOL" to view available applications.</p>
-    <p>2. Select a tool to add it to your list.</p>
-    <p>3. Click a tool name to download it.</p>
-    <p>4. Use "DELETE" to remove a tool from your list.</p>
-    <button class="close-btn" onclick="closeInstructions()">Close</button>
-  </div>
+  <div id="appsContainer"></div>
 </div>
 
 <script>
-  window.addEventListener('DOMContentLoaded', () => {
-    const intro = document.getElementById('intro');
-    const app = document.getElementById('mainApp');
-
-    intro.addEventListener('click', () => {
-      intro.style.opacity = '0';
-      intro.style.pointerEvents = 'none';
-      setTimeout(() => {
-        intro.style.display = 'none';
-        app.style.display = 'block';
-      }, 1000);
-    });
-  });
-
-  const appContainer = document.getElementById("appContainer");
-  const fileMenu = document.getElementById("fileMenu");
-  const instructionModal = document.getElementById("instructionModal");
-
+  // استدعاء التطبيقات من التخزين المحلي أو تعيين مجموعة أولية
   let apps = JSON.parse(localStorage.getItem("sirv_apps") || "[]");
-
-  function renderApps() {
-    appContainer.innerHTML = "";
-    apps.forEach((app, index) => {
-      const container = document.createElement("div");
-      container.className = "app-button";
-      container.style.animationDelay = `${index * 0.1}s`;
-
-      const link = document.createElement("a");
-      link.href = `./files/${app}`;
-      link.textContent = app;
-      link.download = app;
-
-      const del = document.createElement("button");
-      del.className = "delete-btn";
-      del.textContent = "DELETE";
-      del.onclick = () => {
-        if (confirm(`Are you sure you want to delete "${app}"?`)) {
-          deleteApp(app);
-        }
-      };
-
-      container.appendChild(link);
-      container.appendChild(del);
-      appContainer.appendChild(container);
-    });
-  }
-
-  function toggleFileMenu() {
-    if (fileMenu.style.display === "none" || fileMenu.innerHTML === "") {
-      fetch("./files/list.json")
-        .then(res => res.json())
-        .then(files => {
-          fileMenu.innerHTML = "";
-          files.forEach(file => {
-            const option = document.createElement("div");
-            option.className = "file-option";
-            option.textContent = file;
-            option.onclick = () => addApp(file);
-            fileMenu.appendChild(option);
-          });
-          fileMenu.style.display = "flex";
-        });
-    } else {
-      fileMenu.style.display = "none";
-    }
-  }
-
-  function addApp(fileName) {
-    if (!apps.includes(fileName)) {
-      apps.push(fileName);
-      localStorage.setItem("sirv_apps", JSON.stringify(apps));
-      renderApps();
-      fileMenu.style.display = "none";
-    }
-  }
-
-  function deleteApp(appName) {
-    apps = apps.filter(a => a !== appName);
+  if (apps.length === 0) {
+    // مثال تطبيقات مبدئية
+    apps = [
+      "Ahmed.apk",
+      "Bingo.py",
+      "AlphaTool.js",
+      "BetaScanner.exe",
+      "CyberEye.app",
+      "DeltaTool.py",
+      "EchoSystem.apk",
+      "ZetaScan.exe",
+      "XrayVision.py",
+      "OmegaTool.js"
+    ];
     localStorage.setItem("sirv_apps", JSON.stringify(apps));
+  }
+
+  const appsContainer = document.getElementById("appsContainer");
+  const newFileNameInput = document.getElementById("newFileName");
+  const addFileBtn = document.getElementById("addFileBtn");
+
+  // دالة لتجميع التطبيقات حسب الحرف الأول
+  function groupAppsByLetter(appsList) {
+    const grouped = {};
+    appsList.forEach(app => {
+      const letter = app[0].toUpperCase();
+      if (!grouped[letter]) grouped[letter] = [];
+      grouped[letter].push(app);
+    });
+    // ترتيب الحروف أبجدياً
+    const sortedKeys = Object.keys(grouped).sort();
+    const sortedGrouped = {};
+    sortedKeys.forEach(k => {
+      // ترتيب التطبيقات داخل كل حرف
+      grouped[k].sort((a,b) => a.localeCompare(b));
+      sortedGrouped[k] = grouped[k];
+    });
+    return sortedGrouped;
+  }
+
+  // تحديث العرض
+  function renderApps() {
+    appsContainer.innerHTML = "";
+    const grouped = groupAppsByLetter(apps);
+    if (Object.keys(grouped).length === 0) {
+      appsContainer.innerHTML = "<p style='color:#666; font-style: italic;'>No tools available.</p>";
+      return;
+    }
+
+    for (const letter in grouped) {
+      const section = document.createElement("div");
+      section.className = "category-section";
+
+      const header = document.createElement("div");
+      header.className = "category-header";
+      header.textContent = letter;
+      section.appendChild(header);
+
+      const buttonsDiv = document.createElement("div");
+      buttonsDiv.className = "app-buttons";
+
+      grouped[letter].forEach(appName => {
+        const appBtn = document.createElement("div");
+        appBtn.className = "app-button";
+
+        // تحديث الرابط ليشمل مجلد files
+        const appLink = document.createElement("a");
+        appLink.href = `files/${appName}`;
+        appLink.textContent = appName;
+        appLink.target = "_blank";
+        appLink.rel = "noopener noreferrer";
+
+        // زر الحذف
+        const delBtn = document.createElement("button");
+        delBtn.className = "delete-btn";
+        delBtn.textContent = "Delete";
+        delBtn.title = "Delete this tool";
+
+        delBtn.onclick = () => {
+          if (confirm(`Delete "${appName}"?`)) {
+            apps = apps.filter(a => a !== appName);
+            localStorage.setItem("sirv_apps", JSON.stringify(apps));
+            renderApps();
+          }
+        };
+
+        appBtn.appendChild(appLink);
+        appBtn.appendChild(delBtn);
+        buttonsDiv.appendChild(appBtn);
+      });
+
+      section.appendChild(buttonsDiv);
+      appsContainer.appendChild(section);
+    }
+  }
+
+  // دالة لإضافة ملف جديد
+  function addNewFile() {
+    const newFile = newFileNameInput.value.trim();
+    if (newFile === "") {
+      alert("Please enter a valid filename.");
+      return;
+    }
+    if (apps.includes(newFile)) {
+      alert("This tool already exists.");
+      return;
+    }
+    apps.push(newFile);
+    localStorage.setItem("sirv_apps", JSON.stringify(apps));
+    newFileNameInput.value = "";
     renderApps();
   }
 
-  function openInstructions() {
-    instructionModal.style.display = "flex";
-  }
+  addFileBtn.addEventListener("click", addNewFile);
 
-  function closeInstructions() {
-    instructionModal.style.display = "none";
-  }
+  // إضافة دعم الضغط على Enter داخل حقل الإدخال
+  newFileNameInput.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      addNewFile();
+    }
+  });
 
   renderApps();
 </script>
 
 </body>
-      </html>
+</html>
